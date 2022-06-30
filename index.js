@@ -18,6 +18,14 @@ async function run() {
   try {
     await client.connect();
     const billingCollection = client.db("powerHack").collection("billing-list");
+    // get api
+
+    app.get("/billing-list", async (req, res) => {
+      const query = {};
+      const cursor = billingCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     //  post api
     app.post("/add-billing", async (req, res) => {
       const insertedBill = req.body;
